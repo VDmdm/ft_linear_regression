@@ -3,12 +3,12 @@
 import functions as f
 
 def main():
-	vars = f.read_variable()
+	theta0, theta1 = f.read_variable()
 	temp = f.getDataFromCSV()
 	x = temp[:, 0]
 	melliage = float(input('Enter melliage: '))
 	# melliage = (float(melliage) - x.min()) / (x.max() - x.min())
-	price = vars[0] + (vars[1] * melliage)
+	price = theta0 + (theta1 * melliage)
 	if price <= 0 or melliage <= 0:
 		print("Can't predict this")
 	else:
