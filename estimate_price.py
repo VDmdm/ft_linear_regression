@@ -1,19 +1,18 @@
-import numpy as np
+#! /usr/bin/env python3
 
-def getDataFromCSV():
-	temp = np.genfromtxt("data.csv", delimiter=',')
-	temp = np.delete(temp, 0, 0)
-	return temp
+import functions as f
 
-def read_variable():
-	with open('result', 'r') as f:
-		lines = [float(line.rstrip()) for line in f]
-	return lines
+def main():
+	vars = f.read_variable()
+	temp = f.getDataFromCSV()
+	x = temp[:, 0]
+	melliage = float(input('Enter melliage: '))
+	# melliage = (float(melliage) - x.min()) / (x.max() - x.min())
+	price = vars[0] + (vars[1] * melliage)
+	if price <= 0 or melliage <= 0:
+		print("Can't predict this")
+	else:
+		print("Price: " + str(round(price, 2)))
 
-vars = read_variable()
-temp = getDataFromCSV()
-x = temp[:, 0]
-print(vars[0])
-melliage = input('Enter melliage:')
-melliage = (float(melliage) - x.min()) / (x.max() - x.min())
-print("Price: " + str(vars[0] + (vars[1] * melliage)))
+if __name__ == "__main__":
+	main()
