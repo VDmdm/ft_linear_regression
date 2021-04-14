@@ -16,6 +16,12 @@ def read_variable():
 		lines = [float(line.rstrip()) for line in f]
 	return lines[0], lines[1]
 
+def calc_fi(th0, th1, x):
+	fi = []
+	for milleage in x:
+		fi.append(estimatePrice(th0, th1, milleage))
+	return fi
+
 def normilizeData(var):
 	return (var - var.min()) / (var.max() - var.min())
 
@@ -27,17 +33,23 @@ def restoreTheta(theta0, theta1, price, km):
 def estimatePrice(theta0, theta1, milleage):
 	return theta0 + (theta1 * milleage)
 
-def calcTheta0(th0, th1, x, y, lr):
+def calcTheta0(fi, y, lr):
 	summ = 0
-	for i in range(len(x)):
-		summ += estimatePrice(th0, th1, x[i]) - y[i]
-	return lr * (summ / len(x))
+	for i in range(len(fi)):
+		summ += fi[i] - y[i]
+	return lr * (summ / len(fi))
 
-def calcTheta1(th0, th1, x, y, lr):
+def calcTheta1(fi, x, y, lr):
 	summ = 0
-	for i in range(len(y)):
-		summ += (estimatePrice(th0, th1, x[i]) - y[i]) * x[i]
-	return lr * (summ / len(y))
+	for i in range(len(fi)):
+		summ += (fi[i] - y[i]) * x[i]
+	return lr * (summ / len(fi))
+
+def calc_accuracy(fi_y, y_mean, y):
+	ss_tot = sum((yi - y_mean)**2 for yi in y)
+	ss_res = sum((yi-fi)**2 for yi,fi in zip(y, fi_y))
+	r2 = 1 - (ss_res/ss_tot)
+	return r2
 
 def show_plot(x, y, plt_xy, plt_xy2):
 	fig = plt.figure()

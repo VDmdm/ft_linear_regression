@@ -14,29 +14,3 @@
 # 	plt.legend("bla")
 # 	plt.grid(True)
 # 	plt.draw()
-
-import functions as f
-import numpy as np
-from matplotlib import pyplot as plt
-from matplotlib.animation import FuncAnimation
-plt.style.use('seaborn-pastel')
- 
-temp = f.getDataFromCSV()
-x = temp[:, 0]
-y = temp[:, 1]
-print(x)
-print(y)
-fig = plt.figure()
-ax = plt.axes()
-line, = ax.plot([], [], lw=3)
- 
-def init():
-    line.set_data([], [])
-    return line,
-def animate(i):
-    line.set_data(x, y)
-    return line,
- 
-anim = FuncAnimation(fig, animate, init_func=init,
-                               frames=200, interval=20, blit=True)
-plt.show()
