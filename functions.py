@@ -1,5 +1,22 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
+
+def checkArguments():
+	plot_last = False
+	plot_progres = False
+	for i, arg in enumerate(sys.argv):
+		if i == 0:
+			continue
+		if arg == '--show-plot:final':
+			plot_last = True
+		elif arg == '--show-plot:progress':
+			plot_progres = True
+		else:
+			print("Unknown options: {}".format(arg))
+	if plot_progres:
+		print("ATTENTION: the program will run longer with the option --show-plot:progress")
+	return plot_last, plot_progres
 
 def writeResult(th0, th1):
 	with open('result', 'w') as f:

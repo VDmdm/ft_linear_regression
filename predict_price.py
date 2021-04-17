@@ -9,7 +9,7 @@ def main():
 	melliage = float(input('Enter melliage: '))
 	# melliage = (float(melliage) - x.min()) / (x.max() - x.min())
 	price = theta0 + (theta1 * melliage)
-	if price <= 0 or melliage <= 0:
+	if price < 0 or melliage <= 0:
 		print("Can't predict this")
 	else:
 		print("Price: " + str(round(price, 2)))
